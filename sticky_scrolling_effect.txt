@@ -1,0 +1,49 @@
+import React, { useRef, useEffect } from "react";
+
+const ScrollablePage = () => {
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const stickyElements = scrollRef.current.querySelectorAll(".sticky");
+      stickyElements.forEach((element) => {
+        const top = element.getBoundingClientRect().top;
+        const offset = 50; // Adjust offset according to your design
+        if (top <= offset) {
+          element.classList.add("fixed", "top-0");
+        } else {
+          element.classList.remove("fixed", "top-0");
+        }
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center">
+      <div className="w-full h-20 bg-gray-200 mb-4"></div>
+      <div ref={scrollRef} className="w-full px-4">
+        <div className="sticky py-4 bg-white shadow-md mb-4 h-screen">
+          <p>Div 1 Content</p>
+        </div>
+        <div className="sticky py-4 bg-white shadow-md mb-4 h-screen">
+          <p>Div 2 Content</p>
+        </div>
+        <div className="sticky py-4 bg-white shadow-md mb-4 h-screen">
+          <p>Div 3 Content</p>
+        </div>
+        <div className="sticky py-4 bg-white shadow-md mb-4 h-screen">
+          <p>Div 4 Content</p>
+        </div>
+        <div className="sticky py-4 bg-white shadow-md mb-4 h-screen">
+          <p>Div 5 Content</p>
+        </div>
+      </div>
+      <div className="w-full h-20 bg-gray-200"></div>
+    </div>
+  );
+};
+
+export default ScrollablePage;
